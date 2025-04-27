@@ -10,6 +10,7 @@
 4. [Execution](#execution)
 5. [Customization](#customization)
 6. [Algorithm Details](#algorithm-details)
+6.a [Optimizations](#optimizations)
 7. [Memory Usage](#memory-usage)
 8. [Compatibility](#compatibility)
 9. [Known Issues](#known-issues)
@@ -89,6 +90,16 @@ Uses only integer arithmetic
 Implements the midpoint circle algorithm
 Draws all 8 symmetrical octants simultaneously
 Decision parameter updates use bit shifts for efficiency
+
+### Optimizations
+
+#### Key Optimizations:
+
+- IX register usage for storing center coordinates
+- Bitmask table for fast bitwise operations
+- Register-based calculations minimizing memory access
+- Dual addressing modes for faster pixel plotting
+- Cycle-optimized code in the Bresenham algorithm
 
 #### Pixel Plotting
 Uses pre-calculated screen address table (SCREEN_Y_LOOKUP)
