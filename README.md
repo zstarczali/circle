@@ -1,6 +1,7 @@
-# ZX Spectrum Circle Drawing Program
+# The Circle
+## ZX Spectrum Circle Drawing Program
 
-![ZX Spectrum Screenshot](https://github.com/yourusername/zx-spectrum-circle/raw/main/screenshot.png) *(example screenshot placeholder)*
+![ZX Spectrum Screenshot](https://github.com/zstarczali/circle/raw/main/screenshot.png) 
 
 ## Table of Contents
 1. [Program Description](#program-description)
