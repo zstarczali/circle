@@ -93,7 +93,7 @@ Decision parameter updates use bit shifts for efficiency
 
 ### Optimizations
 
-#### Key Optimizations:
+#### Key Optimizations: (circle-optimized.asm)
 
 - IX register usage for storing center coordinates
 - Bitmask table for fast bitwise operations
