@@ -1,5 +1,5 @@
 # The Circle
-## ZX Spectrum Circle Drawing Fun(ZSCDF)
+## ZX Spectrum Circle Drawing Fun
 
 ![ZX Spectrum Screenshot](https://github.com/zstarczali/circle/raw/main/screenshot.png) 
 
