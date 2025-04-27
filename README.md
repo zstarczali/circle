@@ -43,6 +43,7 @@ This Z80 assembly program implements Bresenham's circle algorithm to draw perfec
 ### Compilation
 ```bash
 sjasmplus --lst=circle.lst --raw=circle.bin --sym=circle.sym circle.asm 
+sjasmplus --lst=circle-optimized.lst --raw=circle-optimized.bin --sym=circle-optimized.sym circle-optimized.asm 
 ```
 #### This generates:
 
@@ -50,9 +51,13 @@ sjasmplus --lst=circle.lst --raw=circle.bin --sym=circle.sym circle.asm
   - circle.lst - Assembly listing with addresses
   - circle.sym - Symbol table
   - circle.bin - Raw binary
+  - circle-optimized.sna - Executable snapshot
+  - circle-optimized.lst
+  - circle-optimized.sym
+  - circle-optimized.bin - Raw binary
 
 ### Execution
-  Load circle.sna in your preferred emulator:
+  Load circle.sna(or circle-optimized.sna) in your preferred emulator:
   Fuse (multi-platform)
   ZX Spin (Windows)
   ZEsarUX (Linux/macOS)
@@ -99,12 +104,12 @@ Address Range	Usage
 0x8100-0x81FF	Screen address table
 0x8200-0x83FF	PlotPixel routine
 Compatibility
-Tested on:
 
-Original ZX Spectrum 48K hardware
-ZX Spectrum+
-ZX Spectrum 128K (48K mode)
-All major emulators
+Tested on:
+- Original ZX Spectrum 48K hardware
+- ZX Spectrum+
+- ZX Spectrum 128K (48K mode)
+- All major emulators
 
 ### Known Issues
 Maximum reliable radius is 96 pixels (due to 8-bit math)
