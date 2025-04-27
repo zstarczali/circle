@@ -59,9 +59,9 @@ sjasmplus --lst=circle.lst --raw=circle.bin --sym=circle.sym circle.asm
 
 ### The program will:
 
-    - Immediately clear the screen
-    - Draw a circle with default parameters
-    - Halt when complete (press reset to rerun)
+  - Immediately clear the screen
+  - Draw a circle with default parameters
+  - Halt when complete (press reset to rerun)
 
 ### Customization
 Modify these values in the source code:
