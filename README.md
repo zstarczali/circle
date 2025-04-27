@@ -57,7 +57,7 @@ sjasmplus --lst=circle.lst --raw=circle.bin --sym=circle.sym circle.asm
   ZX Spin (Windows)
   ZEsarUX (Linux/macOS)
 
-### The program will:
+The program will:
 
   - Immediately clear the screen
   - Draw a circle with default parameters
@@ -91,7 +91,7 @@ Optimized bit positioning with RRCA rotation
 Automatic clipping of Y coordinates >191
 Screen memory layout compliant with ZX Spectrum standard
 
-#### Memory Usage
+### Memory Usage
 Address Range	Usage
 0x4000-0x57FF	Screen memory
 0x8000-0x8020	Main program
