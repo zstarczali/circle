@@ -46,7 +46,7 @@ This Z80 assembly program implements Bresenham's circle algorithm to draw perfec
 sjasmplus --lst=circle.lst --raw=circle.bin --sym=circle.sym circle.asm 
 sjasmplus --lst=circle-optimized.lst --raw=circle-optimized.bin --sym=circle-optimized.sym circle-optimized.asm 
 ```
-#### This generates:
+#### These generates:
 
   - circle.sna - Executable snapshot
   - circle.lst - Assembly listing with addresses
