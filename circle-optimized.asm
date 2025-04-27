@@ -3,57 +3,57 @@
 
 Start:
     CALL CLEAR_SCREEN
-    LD D, 128        ; Középpont X (0-255)
-    LD E, 96         ; Középpont Y (0-191)
-    LD B, 40         ; Sugár (max 96)
+    LD D, 128        ; Center X (0-255)
+    LD E, 96         ; Center Y (0-191)
+    LD B, 40         ; Radius (max 96)
     CALL DRAW_CIRCLE
     HALT
 
 ; ========================
-; Bresenham kör algoritmus
+; Bresenham circle algorithm
 ; ========================
 DRAW_CIRCLE:
-    LD IXH, D        ; X középpont mentése
-    LD IXL, E        ; Y középpont mentése
+    LD IXH, D        ; Store center X in IXH
+    LD IXL, E        ; Store center Y in IXL
     LD H, 0          ; x = 0
-    LD L, B          ; y = r
-    LD C, 3          ; P = 3 - 2*r
+    LD L, B          ; y = radius
+    LD C, 3          ; P = 3 - 2*radius
     LD A, B
-    ADD A, A
-    NEG
-    ADD A, C
-    LD C, A
+    ADD A, A         ; 2*radius
+    NEG              ; -2*radius
+    ADD A, C         ; 3 - 2*radius
+    LD C, A          ; Store initial decision parameter
 
 .loop:
-    CALL .draw_octants
+    CALL .draw_octants ; Draw all 8 symmetric points
     LD A, H
     CP L
-    RET NC           ; Kilépés ha x >= y
+    RET NC           ; Exit when x >= y
 
     LD A, C
-    BIT 7, A         ; P előjele
-    JR NZ, .p_neg
+    BIT 7, A         ; Check P's sign (bit 7)
+    JR NZ, .p_neg    ; Jump if P is negative
 
-    ; P >= 0 eset
+    ; Case when P >= 0
     DEC L            ; y--
     LD A, H
     ADD A, A
-    ADD A, A         ; 4x
+    ADD A, A         ; 4*x
     SUB L
     SUB L
     SUB L
-    SUB L            ; -4y
-    ADD A, 10
-    ADD A, C
+    SUB L            ; -4*y
+    ADD A, 10        ; +10
+    ADD A, C         ; P += 4*(x-y) + 10
     LD C, A
     JR .p_update
 
-.p_neg:              ; P < 0 eset
+.p_neg:              ; Case when P < 0
     LD A, H
     ADD A, A
-    ADD A, A         ; 4x
-    ADD A, 6
-    ADD A, C
+    ADD A, A         ; 4*x
+    ADD A, 6         ; +6
+    ADD A, C         ; P += 4*x + 6
     LD C, A
 
 .p_update:
@@ -61,7 +61,7 @@ DRAW_CIRCLE:
     JP .loop
 
 .draw_octants:
-    ; Első kvadráns pontok
+    ; First quadrant points (x,y)
     LD A, IXH
     ADD A, H
     LD B, A          ; X + x
@@ -90,7 +90,7 @@ DRAW_CIRCLE:
     SUB L
     CALL PlotPixel   ; Y - y
 
-    ; Második kvadráns pontok
+    ; Second quadrant points (y,x)
     LD A, IXH
     ADD A, L
     LD B, A          ; X + y
@@ -121,51 +121,51 @@ DRAW_CIRCLE:
     RET
 
 ; ========================
-; Gyorsított pixelrajzolás
-; B = X, A = Y
+; Optimized pixel plotting
+; B = X (0-255), A = Y (0-191)
 ; ========================
 PlotPixel:
     CP 192
-    RET NC           ; Érvénytelen Y koordináta
+    RET NC           ; Return if Y coordinate is invalid (>191)
 
     PUSH HL
     PUSH DE
     PUSH BC
 
-    ; Y cím számítás
+    ; Calculate screen address from Y coordinate
     LD H, 0
     LD L, A
-    ADD HL, HL
+    ADD HL, HL       ; Multiply Y by 2 (for word lookup)
     LD DE, SCREEN_Y_LOOKUP
-    ADD HL, DE
-    LD E, (HL)
+    ADD HL, DE       ; HL points to address in lookup table
+    LD E, (HL)       ; Get low byte of address
     INC HL
-    LD D, (HL)
+    LD D, (HL)       ; Get high byte of address
 
-    ; X offset számítás
+    ; Calculate X offset
     LD A, B
+    RRA              ; Rotate right 3 times to divide by 8
     RRA
     RRA
-    RRA
-    AND 31
-    ADD A, E
+    AND 31           ; Mask to 0-31 range
+    ADD A, E         ; Add to screen address low byte
     LD E, A
 
-    ; Bitmaszk
+    ; Get bitmask for pixel position
     LD A, B
-    AND 7
+    AND 7            ; Get pixel position (0-7)
     LD HL, BitTable
-    ADD A, L
+    ADD A, L         ; Add offset to table
     LD L, A
-    ADC A, H
+    ADC A, H         ; Handle carry if needed
     SUB L
     LD H, A
-    LD C, (HL)
+    LD C, (HL)       ; Get bitmask from table
 
-    ; Pixel beállítás
-    LD A, (DE)
-    OR C
-    LD (DE), A
+    ; Set the pixel
+    LD A, (DE)       ; Get current screen byte
+    OR C             ; OR with our bitmask
+    LD (DE), A       ; Write back to screen
 
     POP BC
     POP DE
@@ -173,8 +173,9 @@ PlotPixel:
     RET
 
 BitTable:
-    DB $80, $40, $20, $10, $08, $04, $02, $01
+    DB $80, $40, $20, $10, $08, $04, $02, $01  ; Pixel bitmasks
 
+; Screen address lookup table (256 bytes)
 SCREEN_Y_LOOKUP:
     DW $4000,$4100,$4200,$4300,$4400,$4500,$4600,$4700,$4020,$4120,$4220,$4320,$4420,$4520,$4620,$4720
     DW $4040,$4140,$4240,$4340,$4440,$4540,$4640,$4740,$4060,$4160,$4260,$4360,$4460,$4560,$4660,$4760
@@ -190,11 +191,11 @@ SCREEN_Y_LOOKUP:
     DW $50C0,$51C0,$52C0,$53C0,$54C0,$55C0,$56C0,$57C0,$50E0,$51E0,$52E0,$53E0,$54E0,$55E0,$56E0,$57E0
 
 CLEAR_SCREEN:
-    LD HL, $4000
-    LD DE, $4001
-    LD BC, $17FF
-    LD (HL), 0
-    LDIR
+    LD HL, $4000     ; Start of screen memory
+    LD DE, $4001     ; Next byte
+    LD BC, $17FF     ; 6143 bytes to clear (entire screen)
+    LD (HL), 0       ; Clear first byte
+    LDIR             ; Block copy (clear rest of screen)
     RET
 
     SAVESNA "circle-optimized.sna", Start
