@@ -10,11 +10,11 @@
 4. [Execution](#execution)
 5. [Customization](#customization)
 6. [Algorithm Details](#algorithm-details)
-6.a [Optimizations](#optimizations)
-7. [Memory Usage](#memory-usage)
-8. [Compatibility](#compatibility)
-9. [Known Issues](#known-issues)
-10. [License](#license)
+7. [Optimizations](#optimizations)
+8. [Memory Usage](#memory-usage)
+9. [Compatibility](#compatibility)
+10. [Known Issues](#known-issues)
+11. [License](#license)
 
 ## Program Description
 
