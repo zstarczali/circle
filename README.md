@@ -41,14 +41,14 @@ This Z80 assembly program implements Bresenham's circle algorithm to draw perfec
 
 ### Compilation
 ```bash
-sjasmplus --lst=circle.lst --raw=circle.bin --sym=circle.sym circle.asm
+sjasmplus --lst=circle.lst --raw=circle.bin --sym=circle.sym circle.asm 
 ```
-    This generates:
+#### This generates:
 
-    circle.sna - Executable snapshot
-    circle.lst - Assembly listing with addresses
-    circle.sym - Symbol table
-    circle.bin - Raw binary
+  - circle.sna - Executable snapshot
+  - circle.lst - Assembly listing with addresses
+  - circle.sym - Symbol table
+  - circle.bin - Raw binary
 
 ### Execution
   Load circle.sna in your preferred emulator:
@@ -58,9 +58,9 @@ sjasmplus --lst=circle.lst --raw=circle.bin --sym=circle.sym circle.asm
 
 ### The program will:
 
-    -Immediately clear the screen
-    -Draw a circle with default parameters
-    -Halt when complete (press reset to rerun)
+    - Immediately clear the screen
+    - Draw a circle with default parameters
+    - Halt when complete (press reset to rerun)
 
 ### Customization
 Modify these values in the source code:
